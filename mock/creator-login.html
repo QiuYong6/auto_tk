@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <title>抖音创作者中心 · 登录（本地 MOCK）</title>
+  <style>
+    * { box-sizing:border-box; font-family:"PingFang SC","Microsoft YaHei",system-ui,sans-serif; }
+    body { margin:0; min-height:100vh; display:flex; align-items:center; justify-content:center;
+      background:linear-gradient(135deg,#e8ecff,#f3e8ff); }
+    .card { background:#fff; border-radius:18px; box-shadow:0 20px 60px rgba(0,0,0,.12); padding:36px 48px; text-align:center; width:420px; }
+    .badge { display:inline-block; background:#fe2c55; color:#fff; border-radius:20px; padding:3px 12px; font-size:12px; margin-bottom:14px; }
+    h1 { font-size:20px; margin:0 0 4px; }
+    .tab { color:#fe2c55; font-weight:700; margin:14px 0 6px; }
+    .sub { color:#8a92a6; font-size:13px; margin-bottom:14px; }
+    .qr { width:180px; height:180px; margin:0 auto 16px; border-radius:12px;
+      background:repeating-linear-gradient(45deg,#1f2433 0 7px,#fff 7px 14px); border:8px solid #fff; outline:1px solid #e6e9f0; }
+    button { background:#21ba72; color:#fff; border:none; border-radius:10px; padding:12px 22px; font-size:15px; cursor:pointer; }
+    .hint { color:#b7bccb; font-size:12px; margin-top:16px; }
+    .done { color:#21ba72; font-weight:700; font-size:18px; }
+  </style>
+</head>
+<body>
+  <div class="card" id="card">
+    <span class="badge">本地 MOCK 登录页</span>
+    <h1>抖音创作者中心 · 创作者</h1>
+    <div class="tab">我是创作者</div>
+    <div class="sub">扫码登录</div>
+    <div class="qr"></div>
+    <button id="scan">✅ 模拟扫码登录成功</button>
+    <div class="hint">真实环境是用手机抖音 App 扫这个码；这里点按钮即可模拟扫码完成。</div>
+  </div>
+  <script>
+    document.getElementById('scan').addEventListener('click', () => {
+      document.getElementById('card').innerHTML =
+        '<span class="badge">本地 MOCK 登录页</span><h1>登录成功</h1><div class="done">✓ 已检测到扫码登录</div><div class="hint">登录态已写入该账号的独立 Profile，可关闭此窗口。</div>'
+      // 自动化通过 URL 是否含 "logged" 检测登录成功
+      location.hash = 'logged'
+    })
+  </script>
+</body>
+</html>

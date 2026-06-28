@@ -1,0 +1,34 @@
+{
+  "name": "douyin-auto-tool",
+  "version": "0.1.0",
+  "description": "抖音/TikTok 自动化发布与投流桌面工具",
+  "main": "./out/main/index.js",
+  "author": "",
+  "license": "ISC",
+  "scripts": {
+    "dev": "electron-vite dev",
+    "dev:mock": "DOUYIN_MOCK=1 electron-vite dev",
+    "build": "electron-vite build",
+    "preview": "electron-vite preview",
+    "rebuild": "electron-rebuild -f -w better-sqlite3",
+    "postinstall": "electron-builder install-app-deps && playwright install chromium",
+    "build:win": "electron-vite build && electron-builder --win",
+    "build:mac": "electron-vite build && electron-builder --mac"
+  },
+  "dependencies": {
+    "better-sqlite3": "^11.3.0",
+    "chart.js": "^4.4.4",
+    "playwright": "^1.47.0",
+    "playwright-extra": "^4.3.6",
+    "puppeteer-extra-plugin-stealth": "^2.11.2"
+  },
+  "devDependencies": {
+    "@electron/rebuild": "^3.6.0",
+    "@vitejs/plugin-vue": "^5.1.4",
+    "electron": "^32.1.0",
+    "electron-builder": "^25.0.5",
+    "electron-vite": "^2.3.0",
+    "vite": "^5.4.0",
+    "vue": "^3.5.10"
+  }
+}

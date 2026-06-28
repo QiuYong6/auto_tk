@@ -1,0 +1,41 @@
+name: Build Windows EXE
+
+# 在 GitHub 的 Windows 机器上原生构建 .exe，无需自己有 Windows 电脑。
+# 触发：手动 (Actions 页面 Run workflow) 或推送 v* 标签。
+on:
+  workflow_dispatch:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  build-win:
+    runs-on: windows-latest
+    # 让 Playwright 把 Chromium 内核装进 node_modules/playwright-core/.local-browsers，
+    # 从而被打进安装包（asarUnpack 已解包 playwright-core），用户机器无需再装浏览器。
+    env:
+      PLAYWRIGHT_BROWSERS_PATH: '0'
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install deps
+        run: npm ci
+
+      - name: Install Chromium for Playwright
+        run: npx playwright install chromium
+
+      - name: Build & package (.exe)
+        run: npm run build:win
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: douyin-auto-win
+          path: release/*.exe

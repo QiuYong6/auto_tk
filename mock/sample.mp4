@@ -1,0 +1,1 @@
+MOCK_VIDEO_FILE_FOR_LOCAL_TESTING — 仅用于在 Mac 上测试自动化上传流程的占位文件（setInputFiles 只要求文件存在，不校验内容）。

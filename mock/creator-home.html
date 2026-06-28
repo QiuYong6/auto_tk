@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <title>抖音创作者中心 · 首页（本地 MOCK）</title>
+  <style>
+    * { box-sizing:border-box; font-family:"PingFang SC","Microsoft YaHei",system-ui,sans-serif; }
+    body { margin:0; background:#f4f6fa; color:#2b303b; }
+    .bar { background:#fff; border-bottom:1px solid #e6e9f0; padding:12px 24px; display:flex; align-items:center; gap:12px; }
+    .logo { font-weight:800; }
+    .badge { background:#fe2c55; color:#fff; border-radius:20px; padding:2px 10px; font-size:12px; }
+    .wrap { max-width:900px; margin:24px auto; }
+    .cards { display:grid; grid-template-columns:repeat(4,1fr); gap:16px; margin-bottom:18px; }
+    .card { background:#fff; border:1px solid #e6e9f0; border-radius:12px; padding:18px; }
+    .lbl { color:#8a92a6; font-size:13px; }
+    .num { font-size:26px; font-weight:700; margin-top:8px; }
+    .panel { background:#fff; border:1px solid #e6e9f0; border-radius:12px; padding:20px; }
+    .note { color:#b7bccb; font-size:12px; margin-top:16px; text-align:center; }
+  </style>
+</head>
+<body>
+  <div class="bar"><span class="logo">抖音 · 创作者中心</span><span class="badge">本地 MOCK 首页</span><span style="margin-left:auto;color:#8a92a6">已登录</span></div>
+  <div class="wrap">
+    <div class="cards">
+      <div class="card"><div class="lbl">作品总数</div><div class="num">128</div></div>
+      <div class="card"><div class="lbl">近7日播放</div><div class="num">5.2w</div></div>
+      <div class="card"><div class="lbl">粉丝数</div><div class="num">1.4w</div></div>
+      <div class="card"><div class="lbl">主页访问</div><div class="num">863</div></div>
+    </div>
+    <div class="panel">
+      <h3 style="margin-top:0">创作概览</h3>
+      <p class="lbl">这是本地假的创作者首页，仅用于让自动化"先打开 home、确认登录态"这一步可被测试。自动化随后会自动跳转到发布页继续上传。</p>
+    </div>
+    <div class="note">creator-micro/home（MOCK）— 不联网、不碰真实抖音</div>
+  </div>
+</body>
+</html>
