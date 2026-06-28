@@ -82,17 +82,18 @@ Windows 机器原生构建，自动解决 `better-sqlite3` 编译和 Chromium �
 
 ### 方式 B：本地 Windows 机器/虚拟机
 
-```bash
+```powershell
 npm install
-# 关键：必须设 PLAYWRIGHT_BROWSERS_PATH=0，让 Chromium 内核装进 node_modules 随包打进 exe，
-# 否则用户机器上会报 "Executable doesn't exist at ...ms-playwright\chromium-xxxx\chrome.exe"。
-# PowerShell:  $env:PLAYWRIGHT_BROWSERS_PATH="0"
-# CMD:         set PLAYWRIGHT_BROWSERS_PATH=0
+# 关键：把 Chromium 内核装到项目根的 pw-browsers/，electron-builder 会用 extraResources
+# 把它复制到安装包的 resources/pw-browsers（asar 外、可执行）。运行时自动指向该目录。
+# 否则用户机器上会报 "Executable doesn't exist at ...chrome.exe"。
+$env:PLAYWRIGHT_BROWSERS_PATH="$PWD\pw-browsers"   # PowerShell
+# CMD:  set PLAYWRIGHT_BROWSERS_PATH=%CD%\pw-browsers
 npx playwright install chromium
 npm run build:win           # 产物在 release/
 ```
 
-> CI（方式 A）已在 workflow 里设好该变量，无需手动操作。
+> CI（方式 A）已在 workflow 里设好该变量并自带校验步骤，无需手动操作。
 
 ## 待补全（需 King 提供后落地）
 

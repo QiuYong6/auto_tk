@@ -11,10 +11,10 @@ on:
 jobs:
   build-win:
     runs-on: windows-latest
-    # 让 Playwright 把 Chromium 内核装进 node_modules/playwright-core/.local-browsers，
-    # 从而被打进安装包（asarUnpack 已解包 playwright-core），用户机器无需再装浏览器。
+    # 把 Chromium 内核装到项目根的 pw-browsers/，再由 electron-builder 的 extraResources
+    # 复制到安装包的 resources/pw-browsers（asar 外，可执行）。用户机器无需再装浏览器。
     env:
-      PLAYWRIGHT_BROWSERS_PATH: '0'
+      PLAYWRIGHT_BROWSERS_PATH: ${{ github.workspace }}\pw-browsers
     steps:
       - uses: actions/checkout@v4
 
@@ -28,6 +28,14 @@ jobs:
 
       - name: Install Chromium for Playwright
         run: npx playwright install chromium
+
+      # 校验内核确实装进了 pw-browsers，避免打出「空壳」包
+      - name: Verify Chromium bundled
+        shell: pwsh
+        run: |
+          $exe = Get-ChildItem -Recurse -Filter chrome.exe "$env:GITHUB_WORKSPACE\pw-browsers" -ErrorAction SilentlyContinue | Select-Object -First 1
+          if (-not $exe) { Write-Error "chrome.exe not found in pw-browsers"; exit 1 }
+          Write-Host "OK: $($exe.FullName)"
 
       - name: Build & package (.exe)
         run: npm run build:win

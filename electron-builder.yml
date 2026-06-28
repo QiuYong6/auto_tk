@@ -14,6 +14,15 @@ asarUnpack:
   - "**/node_modules/playwright/**"
   - "**/node_modules/playwright-core/**"
 
+# 把 Chromium 内核放到 asar 外的 resources/pw-browsers（asar 里的 exe 无法执行）。
+# 构建前需把内核装到项目根的 pw-browsers/ 目录（见 CI workflow / 本地构建说明）。
+# 运行时 automation.js 会把 PLAYWRIGHT_BROWSERS_PATH 指向 resources/pw-browsers。
+extraResources:
+  - from: pw-browsers
+    to: pw-browsers
+    filter:
+      - "**/*"
+
 win:
   target:
     - target: nsis

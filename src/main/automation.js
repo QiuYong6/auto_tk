@@ -4,12 +4,13 @@ import { pathToFileURL } from 'url'
 import { app } from 'electron'
 import selectors from './selectors.json'
 
-// 让 Playwright 在「随包内核」里找浏览器，而不是用户机器的 %LOCALAPPDATA%\ms-playwright。
-// 值 '0' = 内核存放在 playwright-core 包目录下的 .local-browsers（已被 asarUnpack 解包，随安装包分发）。
-// 必须在 import('playwright') 之前设置，故放在模块顶层。
-if (!process.env.PLAYWRIGHT_BROWSERS_PATH) {
-  process.env.PLAYWRIGHT_BROWSERS_PATH = '0'
+// 让 Playwright 用「随包内核」，而不是用户机器的 %LOCALAPPDATA%\ms-playwright。
+// 打包后内核放在 asar 外的 resources/pw-browsers（asar 里的 exe 无法执行）；
+// 见 electron-builder.yml 的 extraResources。必须在 import('playwright') 之前设置，故放模块顶层。
+if (app.isPackaged) {
+  process.env.PLAYWRIGHT_BROWSERS_PATH = path.join(process.resourcesPath, 'pw-browsers')
 }
+// 开发模式不强制覆盖：用 npx playwright install 装到默认缓存即可。
 
 // 本地测试模式：DOUYIN_MOCK=1 时，自动化指向本地假发布页，不碰真实抖音。
 const MOCK = process.env.DOUYIN_MOCK === '1'
